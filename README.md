@@ -27,7 +27,7 @@
 
 - For Serverless Deploy
 
-  - **npm i serverless-http** -
+  - **npm i serverless-http** - to run serverless Express app
 
 - Testing
   - **npm i jest --save-dev** - installs Jest
@@ -55,6 +55,12 @@
   - ![image](https://github.com/user-attachments/assets/7b989ffe-32d2-4bab-8e17-15477c14e393)
   - API Gateway is now attached to Lambda
   - ![image](https://github.com/user-attachments/assets/763319b3-b9ac-4e52-9271-ba0d64728fe3)
+ 
+- Monitor
+  - Can see monitoring metrics for API Gateway and Lambda function
+  - ![image](https://github.com/user-attachments/assets/fbaccb93-dd20-4b91-8c97-b10fc0c5a2ed)
+  - ![image](https://github.com/user-attachments/assets/a94d5a06-713c-4c56-b5f0-1c06f197e044)
+
 
 
 
