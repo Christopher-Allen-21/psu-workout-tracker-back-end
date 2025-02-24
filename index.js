@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 const YAML = require('yamljs')
 const swaggerUI = require('swagger-ui-express')
 const swaggerDocument = YAML.load('./swagger.yaml')
+const serverless = require("serverless-http")
 
 const userRoutes = require('./routes/user.js')
 const exerciseRoutes = require('./routes/exercise.js')
@@ -47,21 +48,22 @@ app.use('/workout-history', workoutHistoryRoutes)
 // Follow: Search services.msc in your device 
 // Click start "MongoDB Server (MongoDB) to run the mongoDB server
 // https://stackoverflow.com/questions/46523321/mongoerror-connect-econnrefused-127-0-0-127017
-mongoose.connect(MONGO_URL).then(() => {
-    console.log("Db is connected successfully")
-    // if statement so that when running supertest it uses Port 0 (Port 0 means the first randomly available port)
-    if (process.env.NODE_ENV !== 'test') {
-        app.listen(PORT, () => {
-            console.log(`Listening http://${PORT}`)
-        })
-    }
-}).catch((error) => {
-    console.log(error)
-})
+// mongoose.connect(MONGO_URL).then(() => {
+//     console.log("Db is connected successfully")
+//     // if statement so that when running supertest it uses Port 0 (Port 0 means the first randomly available port)
+//     if (process.env.NODE_ENV !== 'test') {
+//         app.listen(PORT, () => {
+//             console.log(`Listening http://${PORT}`)
+//         })
+//     }
+// }).catch((error) => {
+//     console.log(error)
+// })
 
 
-app.get('/', (req, res) => {
+app.get('/hello', (req, res) => {
     res.send('Hello World from Express and MongoDb!')
 })
 
-module.exports = app
+// module.exports = app
+module.exports.handler = serverless(app)
