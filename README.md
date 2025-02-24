@@ -16,14 +16,15 @@
 
   - **npm init -y** - setup new project and creates package.json
   - **npm install express** - installs express
-  - **npm install mongodb** - installs mongodb
-  - **npm i mongoose** - installs mongoose
+    <!-- - **npm install mongodb** - installs mongodb -->
+    <!-- - **npm i mongoose** - installs mongoose -->
   - **npm i dotenv** - installs dotenv (used for environment variables)
   - **npm install --save-dev nodemon** - installs nodemon
   - **npm install yamljs** - installs yaml
   - **npm install swagger-ui-express** - installs swagger UI
   - **npm install axios** - installs axios (used to make request to 3rd party API)
   - **npm install --save cors** - installs cors
+  - **npm install aws-sdk** - install aws sdk
 
 - For Serverless Deploy
 
@@ -36,6 +37,7 @@
 # Deployment Steps using AWS Lambda
 
 - Setup new Lambda function
+
   - Navigate to AWS Lambda
   - Click "Create function"
   - ![image](https://github.com/user-attachments/assets/56035c0f-5b4a-459b-b8c2-1781d4f035ce)
@@ -47,25 +49,17 @@
   - ![image](https://github.com/user-attachments/assets/81778f8c-a5d3-4b73-8169-7bb7c044c372)
   - Our code can now be seen in Lambda console
   - ![image](https://github.com/user-attachments/assets/1db5fb3e-f2c7-4ccd-959c-9b4184919501)
- 
+
 - Add API Gateway Trigger
+
   - Click "Add trigger" on Lambda console screen
   - ![image](https://github.com/user-attachments/assets/d6e2c093-7e0c-4130-8f56-fe449efd9dd2)
   - Select API Gateway from dropdown. Then click "Add"
   - ![image](https://github.com/user-attachments/assets/7b989ffe-32d2-4bab-8e17-15477c14e393)
   - API Gateway is now attached to Lambda
   - ![image](https://github.com/user-attachments/assets/763319b3-b9ac-4e52-9271-ba0d64728fe3)
- 
+
 - Monitor
   - Can see monitoring metrics for API Gateway and Lambda function
   - ![image](https://github.com/user-attachments/assets/fbaccb93-dd20-4b91-8c97-b10fc0c5a2ed)
   - ![image](https://github.com/user-attachments/assets/a94d5a06-713c-4c56-b5f0-1c06f197e044)
-
-
-
-
-
-
-
-
-

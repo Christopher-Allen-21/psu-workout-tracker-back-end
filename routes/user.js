@@ -1,17 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
+const { getUsers, getUserById, addOrUpdateUser, deleteUser } = require('../userDynamoService.js')
 
-const UserModel = require('../models/user.js')
 
 router.get('/', async(req, res) => {
     try {
-        const user = await UserModel.find()
-        res.status(200).send({
-            user
-        })
-    } 
-    catch (error) {
+        const users = await getUsers()
+        res.status(200).json(users)
+    }
+    catch {
         res.status(500).send({
             message: `${error}`
         })
@@ -22,11 +19,9 @@ router.get('/:id', async(req, res) => {
     const id = req.params.id
 
     try {
-        const user = await UserModel.findById(id)
+        const user = await getUserById(id)
         if(user) {
-            res.status(200).send({
-                user
-            })
+            res.status(200).json(user)
         }
         else {
             res.status(404).send({
@@ -42,38 +37,31 @@ router.get('/:id', async(req, res) => {
 })
 
 router.post('/', async(req, res) => {
-    const newUser = new UserModel({ ...req.body })
+    const user = { ...req.body }
 
     try {
-        const insertedUser = await newUser.save()
-        res.status(201).json(insertedUser)
+        const newUser = await addOrUpdateUser(user)
+        res.status(201).send({
+            newUser
+        })
     }
     catch (error) {
-        if(error instanceof mongoose.Error.ValidationError) {
-            res.status(400).send({
-                message: `${error}`
-            })
-        }
-        else {
-            res.status(500).send({
-                message: `${error}`
-            })
-        }
+        res.status(500).send({
+            message: `${error}`
+        })
     }
 })
     
 router.put('/:id', async(req, res) => {
     const id = req.params.id
+    const user = { ...req.body }
+    user.pk = id
+    user.sk = id
 
     try {
-        const user = await UserModel.findById(id)
-
-        if(user) {
-            await UserModel.findByIdAndUpdate(id, req.body)
-            const updatedUser = await UserModel.findById(id)
-            res.status(200).send({
-                updatedUser
-            })
+        const updatedUser = await addOrUpdateUser(user)
+        if(updatedUser) {
+            res.status(200).json(updatedUser)
         }
         else {
             res.status(404).send({
@@ -81,12 +69,7 @@ router.put('/:id', async(req, res) => {
             })
         }
     }
-    catch (error) {
-        if(error instanceof mongoose.Error.ValidationError) {
-            res.status(400).send({
-                message: `${error}`
-            })
-        }
+    catch (error){
         res.status(500).send({
             message: `${error}`
         })
@@ -97,24 +80,14 @@ router.delete('/:id', async(req, res) => {
     const id = req.params.id
 
     try {
-        const userToDelete = await UserModel.findById(id)
-        if(userToDelete) {
-            await UserModel.deleteOne(userToDelete)
-            res.status(200).send({
-                message: "User deleted successfully."
-            })
-        }
-        else {
-            res.status(404).send({
-                message: "User not found"
-            })
-        }
+        res.json(await deleteUser(id))
     }
-    catch (error) {
+    catch (error){
         res.status(500).send({
             message: `${error}`
-       })
+        })
     }
 })
+
 
 module.exports = router

@@ -1,11 +1,9 @@
 const express = require('express')
 const cors = require('cors')
-const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const YAML = require('yamljs')
 const swaggerUI = require('swagger-ui-express')
 const swaggerDocument = YAML.load('./swagger.yaml')
-const serverless = require("serverless-http")
 
 const userRoutes = require('./routes/user.js')
 const exerciseRoutes = require('./routes/exercise.js')
@@ -18,7 +16,6 @@ const app = express()
 dotenv.config()
 
 const PORT = process.env.PORT || 7000
-const MONGO_URL = process.env.MONGO_URL
 
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:4200']
 app.use(express.json())
@@ -44,26 +41,25 @@ app.use('/exercises', exerciseRoutes)
 app.use('/programs', programRoutes)
 app.use('/workout-history', workoutHistoryRoutes)
 
-// If there is a connection error ensure MongoDb is running locally
-// Follow: Search services.msc in your device 
-// Click start "MongoDB Server (MongoDB) to run the mongoDB server
-// https://stackoverflow.com/questions/46523321/mongoerror-connect-econnrefused-127-0-0-127017
-// mongoose.connect(MONGO_URL).then(() => {
-//     console.log("Db is connected successfully")
-//     // if statement so that when running supertest it uses Port 0 (Port 0 means the first randomly available port)
-//     if (process.env.NODE_ENV !== 'test') {
-//         app.listen(PORT, () => {
-//             console.log(`Listening http://${PORT}`)
-//         })
-//     }
-// }).catch((error) => {
-//     console.log(error)
-// })
 
-
-app.get('/hello', (req, res) => {
-    res.send('Hello World from Express and MongoDb!')
+app.listen(PORT, () => {
+    console.log(`Listening on http://${PORT}`)
 })
 
-// module.exports = app
-module.exports.handler = serverless(app)
+app.get('/', (req, res) => {
+    res.send('Hello World from Express and DynamoDb!')
+})
+
+
+// app.get('/users', async(req, res) => {
+//     try {
+//         const users = await getUsers()
+//         res.json(users)
+//     }
+//     catch {
+//         console.log(err)
+//         res.status(500).json({err: "Something went wrong"})
+//     }
+// })
+
+module.exports = app
