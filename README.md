@@ -34,6 +34,7 @@
   - **npm install supertest --save-dev** - installs Supertest
 
 # Deployment Steps using AWS Lambda
+- https://www.youtube.com/watch?v=xUFnPGVs7so&t=249s
 
 - Setup new Lambda function
   - Navigate to AWS Lambda
