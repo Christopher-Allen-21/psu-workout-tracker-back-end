@@ -1,4 +1,4 @@
-# PSU Masters Sample Final Project
+# PSU Masters Sample Final Project - Back End
 
 - **Objective** - To design, develop, and deploy a project that demonstrates skills and knowledge of web development
 
@@ -36,6 +36,8 @@
 
 # Deployment Steps using AWS Lambda
 
+- https://www.youtube.com/watch?v=xUFnPGVs7so&t=249s
+
 - Setup new Lambda function
 
   - Navigate to AWS Lambda
@@ -58,6 +60,10 @@
   - ![image](https://github.com/user-attachments/assets/7b989ffe-32d2-4bab-8e17-15477c14e393)
   - API Gateway is now attached to Lambda
   - ![image](https://github.com/user-attachments/assets/763319b3-b9ac-4e52-9271-ba0d64728fe3)
+  - Navigate to API Gateway. Click "Create Resource" and add proxy. Click "Deploy API"
+  - ![image](https://github.com/user-attachments/assets/adc2fe99-d4ca-43f6-b7b1-e86bd1aff92d)
+  - Url for the API Gateway can be seen
+  - ![image](https://github.com/user-attachments/assets/cb7f45e3-3987-4e7a-9de9-fc09c210721e)
 
 - Monitor
   - Can see monitoring metrics for API Gateway and Lambda function
