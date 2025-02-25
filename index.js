@@ -15,8 +15,6 @@ const workoutHistoryRoutes = require('./routes/workoutHistory.js')
 const app = express()
 dotenv.config()
 
-const PORT = process.env.PORT || 7000
-
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:4200']
 app.use(express.json())
 app.use(
@@ -42,24 +40,12 @@ app.use('/programs', programRoutes)
 app.use('/workout-history', workoutHistoryRoutes)
 
 
-app.listen(PORT, () => {
-    console.log(`Listening on http://${PORT}`)
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`Listening...`)
 })
 
 app.get('/', (req, res) => {
     res.send('Hello World from Express and DynamoDb!')
 })
-
-
-// app.get('/users', async(req, res) => {
-//     try {
-//         const users = await getUsers()
-//         res.json(users)
-//     }
-//     catch {
-//         console.log(err)
-//         res.status(500).json({err: "Something went wrong"})
-//     }
-// })
 
 module.exports = app
