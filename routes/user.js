@@ -8,7 +8,7 @@ router.get('/', async(req, res) => {
         const users = await getUsers()
         res.status(200).json(users)
     }
-    catch {
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -29,7 +29,7 @@ router.get('/:id', async(req, res) => {
             })
         }
     }
-    catch (error){
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -45,7 +45,7 @@ router.post('/', async(req, res) => {
             newUser
         })
     }
-    catch (error) {
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -69,7 +69,7 @@ router.put('/:id', async(req, res) => {
             })
         }
     }
-    catch (error){
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -82,7 +82,7 @@ router.delete('/:id', async(req, res) => {
     try {
         res.json(await deleteUser(id))
     }
-    catch (error){
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
