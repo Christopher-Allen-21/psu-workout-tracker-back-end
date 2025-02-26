@@ -1,17 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
+const { getPrograms, getProgramsById, addOrUpdateProgram, deleteProgram } = require('../services/programDynamoService.js')
 
-const ProgramModel = require("../models/program")
 
 router.get('/', async(req, res) => {
     try {
-        const program = await ProgramModel.find()
-        res.status(200).send({
-            program
-        })
-    } 
-    catch (error) {
+        const programs = await getPrograms()
+        res.status(200).json(programs)
+    }
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -22,11 +19,9 @@ router.get('/:id', async(req, res) => {
     const id = req.params.id
 
     try {
-        const program = await ProgramModel.findById(id)
+        const program = await getProgramsById(id)
         if(program) {
-            res.status(200).send({
-                program
-            })
+            res.status(200).json(program)
         }
         else {
             res.status(404).send({
@@ -34,7 +29,7 @@ router.get('/:id', async(req, res) => {
             })
         }
     }
-    catch (error){
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -42,38 +37,31 @@ router.get('/:id', async(req, res) => {
 })
 
 router.post('/', async(req, res) => {
-    const newProgram = new ProgramModel({ ...req.body })
+    const program = { ...req.body }
 
     try {
-        const insertedExcercise = await newProgram.save()
-        res.status(201).json(insertedExcercise)
+        const newProgram = await addOrUpdateProgram(program)
+        res.status(201).send({
+            newProgram
+        })
     }
-    catch (error) {
-        if(error instanceof mongoose.Error.ValidationError) {
-            res.status(400).send({
-                message: `${error}`
-            })
-        }
-        else {
-            res.status(500).send({
-                message: `${error}`
-            })
-        }
+    catch(error) {
+        res.status(500).send({
+            message: `${error}`
+        })
     }
 })
     
 router.put('/:id', async(req, res) => {
     const id = req.params.id
+    const program = { ...req.body }
+    program.pk = id
+    program.sk = id
 
     try {
-        const program = await ProgramModel.findById(id)
-
-        if(program) {
-            await ProgramModel.findByIdAndUpdate(id, req.body)
-            const updatedProgram = await ProgramModel.findById(id)
-            res.status(200).send({
-                updatedProgram
-            })
+        const updatedProgram = await addOrUpdateProgram(program)
+        if(updatedProgram) {
+            res.status(200).json(updatedProgram)
         }
         else {
             res.status(404).send({
@@ -81,12 +69,7 @@ router.put('/:id', async(req, res) => {
             })
         }
     }
-    catch (error) {
-        if(error instanceof mongoose.Error.ValidationError) {
-            res.status(400).send({
-                message: `${error}`
-            })
-        }
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -97,24 +80,14 @@ router.delete('/:id', async(req, res) => {
     const id = req.params.id
 
     try {
-        const programToDelete = await ProgramModel.findById(id)
-        if(programToDelete) {
-            await ProgramModel.deleteOne(programToDelete)
-            res.status(200).send({
-                message: "Program deleted successfully."
-            })
-        }
-        else {
-            res.status(404).send({
-                message: "Program not found"
-            })
-        }
+        res.json(await deleteProgram(id))
     }
-    catch (error) {
+    catch(error) {
         res.status(500).send({
             message: `${error}`
-       })
+        })
     }
 })
+
 
 module.exports = router

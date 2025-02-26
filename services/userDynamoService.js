@@ -8,18 +8,18 @@ AWS.config.update({
 })
 
 const dynamoClient = new AWS.DynamoDB.DocumentClient()
-const USER_TABLE = "psu-workout-tracker-users"
+const USERS_TABLE = process.env.USERS_TABLE
 
 const getUsers = async() => {
     const params = {
-        TableName: USER_TABLE
+        TableName: USERS_TABLE
     }
     return await dynamoClient.scan(params).promise()
 }
 
 const getUserById = async(id) => {
     const params = {
-        TableName:  USER_TABLE,
+        TableName:  USERS_TABLE,
         ExpressionAttributeValues: { ":userId": id },
         KeyConditionExpression: "pk = :userId"
     }
@@ -28,7 +28,7 @@ const getUserById = async(id) => {
 
 const addOrUpdateUser = async(user) => {
     const params = {
-        TableName:  USER_TABLE,
+        TableName:  USERS_TABLE,
         Item: user
     }
     return await dynamoClient.put(params).promise()
@@ -36,7 +36,7 @@ const addOrUpdateUser = async(user) => {
 
 const deleteUser = async(id) => {
     const params = {
-        TableName:  USER_TABLE,
+        TableName:  USERS_TABLE,
         Key: {
             "pk": id,
             "sk": id,
@@ -53,15 +53,6 @@ module.exports = {
     deleteUser
 }
 
-// const user = {
-//     "pk": "1",
-//     "sk": "1",
-//     "firstName": "Robert",
-//     "lastName": "Allen",
-//     "birthDate": "05/22/1998",
-//     "email": "sallen@yahoo.com",
-//     "height": 68,
-//     "weight": 170
-// }
+
 
 

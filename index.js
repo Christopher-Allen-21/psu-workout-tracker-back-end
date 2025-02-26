@@ -15,7 +15,7 @@ const workoutHistoryRoutes = require('./routes/workoutHistory.js')
 const app = express()
 dotenv.config()
 
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:4200']
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:4200', 'https://chrisallen1996.com']
 app.use(express.json())
 app.use(
     cors({

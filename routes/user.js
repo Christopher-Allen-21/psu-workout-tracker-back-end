@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getUsers, getUserById, addOrUpdateUser, deleteUser } = require('../userDynamoService.js')
+const { getUsers, getUserById, addOrUpdateUser, deleteUser } = require('../services/userDynamoService.js')
 
 
 router.get('/', async(req, res) => {

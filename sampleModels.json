@@ -1,0 +1,28 @@
+[
+    {
+        "pk": "1",
+        "sk": "1",
+        "firstName": "Robert",
+        "lastName": "Allen",
+        "birthDate": "05/22/1998",
+        "email": "sallen@yahoo.com",
+        "height": 68,
+        "weight": 170
+    },
+    
+    {
+     "pk": "1",
+     "sk": "1",
+      "name": "Pull",
+      "description": "The Pull program consists of programs that utilize a pulling motion.",
+      "timesCompleted": 0,
+      "customOrPremade": "Premade",
+      "bodyArea": [
+        "Back",
+        "Arms",
+        "Shoulders"
+      ],
+      "workouts": [],
+      "musclesUsed": []
+    }
+]
