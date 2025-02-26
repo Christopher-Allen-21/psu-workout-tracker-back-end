@@ -16,8 +16,6 @@
 
   - **npm init -y** - setup new project and creates package.json
   - **npm install express** - installs express
-    <!-- - **npm install mongodb** - installs mongodb -->
-    <!-- - **npm i mongoose** - installs mongoose -->
   - **npm i dotenv** - installs dotenv (used for environment variables)
   - **npm install --save-dev nodemon** - installs nodemon
   - **npm install yamljs** - installs yaml
@@ -26,13 +24,22 @@
   - **npm install --save cors** - installs cors
   - **npm install aws-sdk** - install aws sdk
 
-- For Serverless Deploy
+- To Run
 
-  - **npm i serverless-http** - to run serverless Express app
+  - **npm start** - to run locally
 
 - Testing
   - **npm i jest --save-dev** - installs Jest
   - **npm install supertest --save-dev** - installs Supertest
+
+# Create AWS User
+
+- Go to Users in AWS console
+- Click "Create user"
+- Add user name
+- Attach policies
+- Copy down AWS Access Key and AWS Secret Key
+- Add AWS Access Key to .env file and add AWS Secret Key to Heroku Config Vars
 
 # Deployment Steps using AWS Lambda
 
