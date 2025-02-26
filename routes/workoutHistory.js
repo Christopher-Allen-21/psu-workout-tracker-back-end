@@ -1,17 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
+const { getWorkoutHistorys, getWorkoutHistoryById, addOrUpdateWorkoutHistory, deleteWorkoutHistory } = require('../services/workoutHistoryDynamoService.js')
 
-const WorkoutHistoryModel = require("../models/workoutHistory")
 
 router.get('/', async(req, res) => {
     try {
-        const workoutHistory = await WorkoutHistoryModel.find()
-        res.status(200).send({
-            workoutHistory
-        })
-    } 
-    catch (error) {
+        const users = await getWorkoutHistorys()
+        res.status(200).json(users)
+    }
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -22,11 +19,9 @@ router.get('/:id', async(req, res) => {
     const id = req.params.id
 
     try {
-        const workoutHistory = await WorkoutHistoryModel.findById(id)
-        if(workoutHistory) {
-            res.status(200).send({
-                workoutHistory
-            })
+        const user = await getWorkoutHistoryById(id)
+        if(user) {
+            res.status(200).json(user)
         }
         else {
             res.status(404).send({
@@ -34,7 +29,7 @@ router.get('/:id', async(req, res) => {
             })
         }
     }
-    catch (error){
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -42,38 +37,31 @@ router.get('/:id', async(req, res) => {
 })
 
 router.post('/', async(req, res) => {
-    const newWorkoutHistory = new WorkoutHistoryModel({ ...req.body })
+    const user = { ...req.body }
 
     try {
-        const insertedExcercise = await newWorkoutHistory.save()
-        res.status(201).json(insertedExcercise)
+        const newWorkoutHistory = await addOrUpdateWorkoutHistory(user)
+        res.status(201).send({
+            newWorkoutHistory
+        })
     }
-    catch (error) {
-        if(error instanceof mongoose.Error.ValidationError) {
-            res.status(400).send({
-                message: `${error}`
-            })
-        }
-        else {
-            res.status(500).send({
-                message: `${error}`
-            })
-        }
+    catch(error) {
+        res.status(500).send({
+            message: `${error}`
+        })
     }
 })
     
 router.put('/:id', async(req, res) => {
     const id = req.params.id
+    const user = { ...req.body }
+    user.pk = id
+    user.sk = id
 
     try {
-        const workoutHistory = await WorkoutHistoryModel.findById(id)
-
-        if(workoutHistory) {
-            await WorkoutHistoryModel.findByIdAndUpdate(id, req.body)
-            const updatedWorkoutHistory = await WorkoutHistoryModel.findById(id)
-            res.status(200).send({
-                updatedWorkoutHistory
-            })
+        const updatedWorkoutHistory = await addOrUpdateWorkoutHistory(user)
+        if(updatedWorkoutHistory) {
+            res.status(200).json(updatedWorkoutHistory)
         }
         else {
             res.status(404).send({
@@ -81,12 +69,7 @@ router.put('/:id', async(req, res) => {
             })
         }
     }
-    catch (error) {
-        if(error instanceof mongoose.Error.ValidationError) {
-            res.status(400).send({
-                message: `${error}`
-            })
-        }
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -97,24 +80,14 @@ router.delete('/:id', async(req, res) => {
     const id = req.params.id
 
     try {
-        const workoutHistoryToDelete = await WorkoutHistoryModel.findById(id)
-        if(workoutHistoryToDelete) {
-            await WorkoutHistoryModel.deleteOne(workoutHistoryToDelete)
-            res.status(200).send({
-                message: "Workout History deleted successfully."
-            })
-        }
-        else {
-            res.status(404).send({
-                message: "Workout History not found"
-            })
-        }
+        res.json(await deleteWorkoutHistory(id))
     }
-    catch (error) {
+    catch(error) {
         res.status(500).send({
             message: `${error}`
-       })
+        })
     }
 })
+
 
 module.exports = router

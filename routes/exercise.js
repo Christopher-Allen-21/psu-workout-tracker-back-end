@@ -1,17 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
+const { getExercises, getExerciseById, addOrUpdateExercise, deleteExercise } = require('../services/exerciseDynamoService.js')
 
-const ExerciseModel = require("../models/exercise")
 
 router.get('/', async(req, res) => {
     try {
-        const exercise = await ExerciseModel.find()
-        res.status(200).send({
-            exercise
-        })
-    } 
-    catch (error) {
+        const exercises = await getExercises()
+        res.status(200).json(exercises)
+    }
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -22,11 +19,9 @@ router.get('/:id', async(req, res) => {
     const id = req.params.id
 
     try {
-        const exercise = await ExerciseModel.findById(id)
+        const exercise = await getExerciseById(id)
         if(exercise) {
-            res.status(200).send({
-                exercise
-            })
+            res.status(200).json(exercise)
         }
         else {
             res.status(404).send({
@@ -34,7 +29,7 @@ router.get('/:id', async(req, res) => {
             })
         }
     }
-    catch (error){
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -42,38 +37,31 @@ router.get('/:id', async(req, res) => {
 })
 
 router.post('/', async(req, res) => {
-    const newExercise = new ExerciseModel({ ...req.body })
+    const exercise = { ...req.body }
 
     try {
-        const insertedExcercise = await newExercise.save()
-        res.status(201).json(insertedExcercise)
+        const newExercise = await addOrUpdateExercise(exercise)
+        res.status(201).send({
+            newExercise
+        })
     }
-    catch (error) {
-        if(error instanceof mongoose.Error.ValidationError) {
-            res.status(400).send({
-                message: `${error}`
-            })
-        }
-        else {
-            res.status(500).send({
-                message: `${error}`
-            })
-        }
+    catch(error) {
+        res.status(500).send({
+            message: `${error}`
+        })
     }
 })
     
 router.put('/:id', async(req, res) => {
     const id = req.params.id
+    const exercise = { ...req.body }
+    exercise.pk = id
+    exercise.sk = id
 
     try {
-        const exercise = await ExerciseModel.findById(id)
-
-        if(exercise) {
-            await ExerciseModel.findByIdAndUpdate(id, req.body)
-            const updatedExercise = await ExerciseModel.findById(id)
-            res.status(200).send({
-                updatedExercise
-            })
+        const updatedExercise = await addOrUpdateExercise(exercise)
+        if(updatedExercise) {
+            res.status(200).json(updatedExercise)
         }
         else {
             res.status(404).send({
@@ -81,12 +69,7 @@ router.put('/:id', async(req, res) => {
             })
         }
     }
-    catch (error) {
-        if(error instanceof mongoose.Error.ValidationError) {
-            res.status(400).send({
-                message: `${error}`
-            })
-        }
+    catch(error) {
         res.status(500).send({
             message: `${error}`
         })
@@ -97,24 +80,14 @@ router.delete('/:id', async(req, res) => {
     const id = req.params.id
 
     try {
-        const exerciseToDelete = await ExerciseModel.findById(id)
-        if(exerciseToDelete) {
-            await ExerciseModel.deleteOne(exerciseToDelete)
-            res.status(200).send({
-                message: "Exercise deleted successfully."
-            })
-        }
-        else {
-            res.status(404).send({
-                message: "Exercise not found"
-            })
-        }
+        res.json(await deleteExercise(id))
     }
-    catch (error) {
+    catch(error) {
         res.status(500).send({
             message: `${error}`
-       })
+        })
     }
 })
+
 
 module.exports = router

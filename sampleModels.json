@@ -1,7 +1,7 @@
 [
     {
-        "pk": "1",
-        "sk": "1",
+        "pk": "0",
+        "sk": "0",
         "firstName": "Robert",
         "lastName": "Allen",
         "birthDate": "05/22/1998",
@@ -11,8 +11,8 @@
     },
     
     {
-     "pk": "1",
-     "sk": "1",
+     "pk": "0",
+     "sk": "0",
       "name": "Pull",
       "description": "The Pull program consists of programs that utilize a pulling motion.",
       "timesCompleted": 0,
@@ -24,5 +24,28 @@
       ],
       "workouts": [],
       "musclesUsed": []
+    },
+
+    {
+     "pk": "0",
+     "sk": "0",
+      "name": "Seated Row",
+      "description": "The Seated Row is an exercise that targets the muscles of the back and upper arms. It involves sitting on a rowing machine with a straight back and pulling a weighted bar towards your chest.",
+      "bodyArea": [
+        "Back",
+        "Arms",
+        "Shoulders"
+      ],
+      "musclesUsed": [],
+      "machinesUsed": []
+    },
+    
+    {
+        "pk": "0",
+        "sk": "0",
+        "dateOfWorkout": "02/16/2025",
+        "exercises": [],
+        "program": null,
+        "feeling": "Great"
     }
 ]
