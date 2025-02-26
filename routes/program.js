@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getPrograms, getProgramsById, addOrUpdateProgram, deleteProgram } = require('../services/programDynamoService.js')
+const { getPrograms, getProgramById, addOrUpdateProgram, deleteProgram } = require('../services/programDynamoService.js')
 
 
 router.get('/', async(req, res) => {
@@ -19,7 +19,7 @@ router.get('/:id', async(req, res) => {
     const id = req.params.id
 
     try {
-        const program = await getProgramsById(id)
+        const program = await getProgramById(id)
         if(program) {
             res.status(200).json(program)
         }
