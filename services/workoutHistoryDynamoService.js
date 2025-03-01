@@ -26,6 +26,15 @@ const getWorkoutHistoryById = async(id) => {
     return await dynamoClient.query(params).promise()
 }
 
+const getWorkoutHistoryByUser = async(userId) => {
+    const params = {
+        TableName:  WORKOUT_HISTORY_TABLE,
+        ExpressionAttributeValues: { ":userId": userId },
+        FilterExpression: "userId = :userId"
+    }
+    return await dynamoClient.scan(params).promise()
+}
+
 const addOrUpdateWorkoutHistory = async(workoutHistory) => {
     const params = {
         TableName:  WORKOUT_HISTORY_TABLE,
@@ -49,6 +58,7 @@ module.exports = {
     dynamoClient,
     getWorkoutHistorys,
     getWorkoutHistoryById,
+    getWorkoutHistoryByUser,
     addOrUpdateWorkoutHistory,
     deleteWorkoutHistory
 }

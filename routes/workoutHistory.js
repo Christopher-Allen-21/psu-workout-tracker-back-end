@@ -1,6 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const { getWorkoutHistorys, getWorkoutHistoryById, addOrUpdateWorkoutHistory, deleteWorkoutHistory } = require('../services/workoutHistoryDynamoService.js')
+const { 
+    getWorkoutHistorys, 
+    getWorkoutHistoryById, 
+    getWorkoutHistoryByUser,
+    addOrUpdateWorkoutHistory, 
+    deleteWorkoutHistory 
+} = require('../services/workoutHistoryDynamoService.js')
 
 
 router.get('/', async(req, res) => {
@@ -19,9 +25,30 @@ router.get('/:id', async(req, res) => {
     const id = req.params.id
 
     try {
-        const user = await getWorkoutHistoryById(id)
-        if(user) {
-            res.status(200).json(user)
+        const workoutHistory = await getWorkoutHistoryById(id)
+        if(workoutHistory) {
+            res.status(200).json(workoutHistory)
+        }
+        else {
+            res.status(404).send({
+                message: "Workout History not found"
+            })
+        }
+    }
+    catch(error) {
+        res.status(500).send({
+            message: `${error}`
+        })
+    }
+})
+
+router.get('/user/:id', async(req, res) => {
+    const id = req.params.id
+
+    try {
+        const workoutHistory = await getWorkoutHistoryByUser(id)
+        if(workoutHistory) {
+            res.status(200).json(workoutHistory)
         }
         else {
             res.status(404).send({
