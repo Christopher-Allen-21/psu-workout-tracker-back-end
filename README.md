@@ -9,6 +9,7 @@
 # To Run
 
 - **npm start** - run this in root directory
+  - Will need to add AWS_SECRET_ACCESS_KEY to .env file (**Ensure this is not pushed to repo**)
 
 # To Run Tests
 - **npm i jest --save-dev** - installs Jest
