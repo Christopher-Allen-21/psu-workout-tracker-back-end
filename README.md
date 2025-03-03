@@ -32,9 +32,17 @@
 
 - Go to Users in AWS console
 - Click "Create user"
+- ![image](https://github.com/user-attachments/assets/1f43213e-436b-4019-acd8-08cab3f17c7d)
 - Add user name
+- ![image](https://github.com/user-attachments/assets/f1f43dbd-726d-47d9-89d2-d3b19e27b566)
 - Attach policies
+- ![image](https://github.com/user-attachments/assets/f8bc4ae0-7de9-44a2-b195-527e5648aa7d)
+- Click "Create User"
+- ![image](https://github.com/user-attachments/assets/ca44aace-7a91-4cd2-ab9a-b48864d07285)
+- Click "Create Access Key"
+- ![image](https://github.com/user-attachments/assets/afd3680e-c956-49a6-a99e-20ae00ea2158)
 - Copy down AWS Access Key and AWS Secret Key
+- ![image](https://github.com/user-attachments/assets/6dac579c-4969-4a9a-b79b-749539c2d015)
 - Add AWS Access Key to .env file and add AWS Secret Key to Heroku Config Vars
 
 # Deployment Heroku
