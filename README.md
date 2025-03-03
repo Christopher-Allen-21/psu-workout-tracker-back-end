@@ -10,6 +10,10 @@
 
 - **npm start** - run this in root directory
 
+# To Run Tests
+- **npm i jest --save-dev** - installs Jest
+- **npm install supertest --save-dev** - installs Supertest
+
 # Packages to Install
 
 - Project Setup
@@ -24,14 +28,6 @@
   - **npm install --save cors** - installs cors
   - **npm install aws-sdk** - install aws sdk
 
-- To Run
-
-  - **npm start** - to run locally
-
-- Testing
-  - **npm i jest --save-dev** - installs Jest
-  - **npm install supertest --save-dev** - installs Supertest
-
 # Create AWS User
 
 - Go to Users in AWS console
@@ -41,38 +37,19 @@
 - Copy down AWS Access Key and AWS Secret Key
 - Add AWS Access Key to .env file and add AWS Secret Key to Heroku Config Vars
 
-# Deployment Steps using AWS Lambda
+# Deployment Heroku
 
-- https://www.youtube.com/watch?v=xUFnPGVs7so&t=249s
-
-- Setup new Lambda function
-
-  - Navigate to AWS Lambda
-  - Click "Create function"
-  - ![image](https://github.com/user-attachments/assets/56035c0f-5b4a-459b-b8c2-1781d4f035ce)
-  - Add configuration details and then click "Create function"
-  - ![image](https://github.com/user-attachments/assets/74f8de0e-1463-405f-84ed-bfb4a0bd8942)
-  - We now have new lambda with some boilerplate code. Click on "Upload from" dropdown to add backend code
-  - ![image](https://github.com/user-attachments/assets/5a285ade-7db5-47d0-8269-69e8e3e61a58)
-  - Upload .zip file of backend code. Click "Save".
-  - ![image](https://github.com/user-attachments/assets/81778f8c-a5d3-4b73-8169-7bb7c044c372)
-  - Our code can now be seen in Lambda console
-  - ![image](https://github.com/user-attachments/assets/1db5fb3e-f2c7-4ccd-959c-9b4184919501)
-
-- Add API Gateway Trigger
-
-  - Click "Add trigger" on Lambda console screen
-  - ![image](https://github.com/user-attachments/assets/d6e2c093-7e0c-4130-8f56-fe449efd9dd2)
-  - Select API Gateway from dropdown. Then click "Add"
-  - ![image](https://github.com/user-attachments/assets/7b989ffe-32d2-4bab-8e17-15477c14e393)
-  - API Gateway is now attached to Lambda
-  - ![image](https://github.com/user-attachments/assets/763319b3-b9ac-4e52-9271-ba0d64728fe3)
-  - Navigate to API Gateway. Click "Create Resource" and add proxy. Click "Deploy API"
-  - ![image](https://github.com/user-attachments/assets/adc2fe99-d4ca-43f6-b7b1-e86bd1aff92d)
-  - Url for the API Gateway can be seen
-  - ![image](https://github.com/user-attachments/assets/cb7f45e3-3987-4e7a-9de9-fc09c210721e)
+- Create New App
+- ![image](https://github.com/user-attachments/assets/551bf844-fe14-4d2c-a17b-dfa47b6aa0f3)
+- ![image](https://github.com/user-attachments/assets/d1fa73ce-9920-41f9-85e4-1cac27c89519)
+- Connect Heroku app to GitHub repository
+- ![image](https://github.com/user-attachments/assets/a1083f4e-051e-41d4-99b7-795d73140084)
+- Navigate to Settings tab and add AWS User SecretKey to Config Vars
+- ![image](https://github.com/user-attachments/assets/ce68dcf2-6aa1-4c73-8c79-7adbb4cc4768)
+- Navigate to Deploy tab and click Deploy Branch
+- ![image](https://github.com/user-attachments/assets/c79e615a-bfd1-4d25-b074-21f48f43d01f)
 
 - Monitor
-  - Can see monitoring metrics for API Gateway and Lambda function
-  - ![image](https://github.com/user-attachments/assets/fbaccb93-dd20-4b91-8c97-b10fc0c5a2ed)
-  - ![image](https://github.com/user-attachments/assets/a94d5a06-713c-4c56-b5f0-1c06f197e044)
+  - Navigate to Metrics tab
+  - ![image](https://github.com/user-attachments/assets/3e7b2f71-d25d-4a59-83c0-3f9c09435da0)
+
